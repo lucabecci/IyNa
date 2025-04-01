@@ -24,6 +24,7 @@ impl LruCache {
         self.usage_order.push_front(key.clone());
     }
 
+    //O(1)
     fn evict_if_needed(&mut self) {
         if self.store.len() >= self.capacity {
             if let Some(least_used) = self.usage_order.pop_back() {
@@ -35,6 +36,7 @@ impl LruCache {
 
 impl Store for LruCache {
     fn get(&mut self, key: &CacheKey) -> Option<&CacheEntry> {
+        //O(n)
         if let Some(entry) = self.store.get(key) {
             if entry.is_expired() {
                 self.remove(key);
@@ -46,6 +48,7 @@ impl Store for LruCache {
         return None;
     }
 
+    //O(n)
     fn put(&mut self, key: CacheKey, value: CacheEntry) {
         self.evict_if_needed();
         self.store.insert(key.clone(), value);
