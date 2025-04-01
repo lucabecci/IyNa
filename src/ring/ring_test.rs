@@ -62,4 +62,33 @@ mod ring_test {
         assert!(!ring.nodes().contains(&&node2));
         assert!(ring.nodes().contains(&&node1));
     }
+
+    #[test]
+    fn test_virtual_nodes_distribution() {
+        let replicas = 100;
+        let mut ring = HashRing::new(replicas);
+
+        let node = Node {
+            id: "NodeID".to_string(),
+        };
+        ring.add_node(node.clone());
+
+        assert_eq!(ring.len(), replicas);
+    }
+
+    #[test]
+    fn test_ring_wraps_correctly() {
+        let replication = 3;
+        let mut ring = HashRing::new(replication);
+
+        let node = Node {
+            id: "NodeID".to_string(),
+        };
+
+        ring.add_node(node.clone());
+
+        let key = u64::MAX;
+        let result = ring.get_node(&key);
+        assert_eq!(result, Some(&node));
+    }
 }
