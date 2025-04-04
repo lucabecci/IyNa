@@ -3,6 +3,7 @@ use crate::store::types::{CacheEntry, CacheKey};
 pub mod lfu;
 pub mod lru;
 pub mod types;
+mod lru_test;
 
 pub trait Store {
     fn get(&mut self, key: &CacheKey) -> Option<&CacheEntry>;
