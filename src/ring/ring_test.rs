@@ -1,7 +1,8 @@
 #[cfg(test)]
 mod ring_test {
     use crate::node::Node;
-    use crate::ring::HashRing;
+    use crate::ring::ring::HashRing;
+
     #[test]
     fn test_add_new_node() {
         let replication = 3;
